@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Verification</title>
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300&display=swap"rel="stylesheet"/>
+  </head>
+  <body style="display: none;">
+    <div class="container">
+      <div>
+        <img class="py-5 my-5 py-md-3" src="logo.png" alt="logo" />
+        <div class="container">
+          <form id="form">
+            <input pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" class="form--email" type="email" id="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required/><br/>
+            <input id="submit-button" type="submit" name="submit" value="Přihlásit"/>
+          </form>
+        </div>
+        <div id="error-div">
+        </div>
+      </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.9.2/firebase-firestore.js"></script>
+  </body>
+</html>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: '***REMOVED_API_KEY***',
+    authDomain: 'attendu-services.firebaseapp.com',
+    databaseURL: 'https://attendu-services.firebaseio.com',
+    projectId: 'attendu-services',
+    storageBucket: 'attendu-services.appspot.com',
+    messagingSenderId: '375245809683',
+    appId: '1:375245809683:web:f87cdb413f3fc060'
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  // START- VERIFICATION JS
+  $('#form').submit(function(e) {
+    e.preventDefault();
+    getData();
+  });
+
+  $(window).load(function() {
+    $('#loading').hide();
+  });
+
+  function getData() {
+    db.collection('ikea')
+      .doc('teambuilding')
+      .get()
+      .then(function(doc) {
+        console.log(document.querySelector('#email').value);
+        const input = document.querySelector('#email').value;
+        console.log(doc.data().users);
+        if (input && doc.data().users.indexOf(input) !== -1) {
+          $(document).ready(function() {
+          $('#pageContainer').load('stats.html');
+          });
+          document.getElementById('error-div').innerHTML =
+            'Loading. Please wait...';
+            $('#error-div').css('color', '#0058a3');
+            $('#error-div').css('font-weight', 'bold');
+          /* console.log("Document data:", doc.data()); */
+        } else {
+          /* console.log("No such document!"); */
+          document.getElementById('error-div').innerHTML =
+            'Invalid e-mail address';
+        }
+      })
+      .catch(function(error) {
+        console.log('Error getting document:', error);
+      });
+  }
+
+  $(document).ready(function() {
+    $('body').css('display', 'block');
+  });
+  // END- VERIFICATION JS
+</script>
+
+<style>
+  /* START- VERIFICATION STYLES */
+  #error-div {
+    margin-top: 20px;
+    color: #ff0000;
+    font-weight: bolder;
+  }
+
+  #error-message {
+    font-size: 13px;
+  }
+
+  #submit-button {
+    margin-top: 20px;
+    padding: 10px 90px 10px 90px;
+    background: #0058a3;
+    color: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  #submit-button:hover {
+    background-color: #2e76b3;
+  }
+
+  .container {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .form--email {
+    padding: 10px 30px 10px 30px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  html,
+  body,
+  .container {
+    height: 100%;
+  }
+
+  ::-webkit-input-placeholder {
+    text-align: center;
+  }
+
+  ::-moz-placeholder {
+    text-align: center;
+  }
+
+  :-ms-input-placeholder {
+    text-align: center;
+  }
+
+  * {
+    font-family: 'Open Sans', sans-serif;
+    overflow: hidden;
+  }
+  /* END- VERIFICATION STYLES */
+</style>

@@ -1,0 +1,20 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /skoda-feedback/{document=**} {
+      allow read, write;
+    }
+     match /vodafone-quiz/{document=**} {
+      allow read, write;
+    }
+    match /kooperativa/data/vanocni-dilny-2018/{document=**} {
+      allow read;
+      allow write: if false;
+    }
+    match /ikea/teambuilding {
+      allow read, write;
+    }
+    match /ikea/{document=**} {
+      allow read, write;
+    }
+  }
+}
