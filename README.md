@@ -1,14 +1,17 @@
-# ikea
-a real-time statistics website for teambuilding
+<div align="center">
 
-Features:
--user authentication
--firestore
--export statistics into Excel
+# Ikea
 
-## pictures
-1)main UI
-![image](https://user-images.githubusercontent.com/35629779/97450983-96dca080-1933-11eb-9db7-bcbe178d76f4.png)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Active-green?style=flat-square)
 
-2)statistics
-![image](https://user-images.githubusercontent.com/35629779/97451144-bd9ad700-1933-11eb-9e90-6064039886db.png)
+</div>
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/stussysenik/ikea.git
+cd ikea
+```
